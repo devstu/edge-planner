@@ -1,0 +1,246 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+<div class="container">
+    <form ng-submit="addThing()">
+        <div class="row row-eq-height">
+            <div class="col-md-6" style="padding:15px;">
+                <div class="row">
+                    <div class="col-md-1" ui-sref="main({primaryDay: prevDay})">
+                        <h3 style="margin:0;"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></h3>
+                    </div>
+                    <div class="col-md-7">
+                        <h3 style="margin:0;">{{thisLabel}} <span ng-if="today">Today!</span></h3>
+                    </div>
+                    <div class="col-md-4 text-right">
+                        <input type="submit" value="Save" class="btn btn-primary">
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Wake Plan</label>
+                        <div class="form-group">
+                            <input type="text" class="form-control" ng-model="thisThingDay.wakePlan" placeholder="">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Wake Log</label>
+                        <div class="form-group">
+                            <input type="text" class="form-control" ng-model="thisThingDay.wakeLog" placeholder="">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Exercise Plan</label>
+                        <div class="form-group">
+                            <input type="text" class="form-control" ng-model="thisThingDay.exercisePlan" placeholder="">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Exercise Log</label>
+                        <div class="form-group">
+                            <input type="text" class="form-control" ng-model="thisThingDay.exerciseLog" placeholder="">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Eating Plan</label>
+                        <div class="form-group">
+                            <textarea ng-model="thisThingDay.eatingPlan" class="form-control" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Eating Log</label>
+                        <div class="form-group">
+                            <textarea ng-model="thisThingDay.eatingLog" class="form-control" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Reading Plan</label>
+                        <div class="form-group">
+                            <input type="text" ng-model="thisThingDay.readingPlan" class="form-control" placeholder="">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Reading Log</label>
+                        <div class="form-group">
+                            <input type="text" ng-model="thisThingDay.readingLog" class="form-control" placeholder="">
+                        </div>
+                    </div>
+                </div>
+                <h4>Tasks / Pomodoros (click to complete)</h4>
+                <table class="table table-hover">
+                    <tbody>
+                        <tr ng-repeat="task in thisThingDay.tasks track by $index ">
+                            <td width="80%" ng-click="completeThisTask($index)" ng-class="{ 'strike' : task.completed }">
+                                {{task.name}}
+                            </td>
+                            <td>
+                                <select ng-model="task.minutes" class="form-control" ng-change="addThing()">
+                                    <option value="0">0</option>
+                                    <option value="15">15 minutes</option>
+                                    <option value="30">30 minutes</option>
+                                    <option value="45">45 minutes</option>
+                                    <option value="60">60 minutes</option>
+                                    <option value="90">90 minutes</option>
+                                    <option value="120">120 minutes</option>
+                                </select>
+                            </td>
+                            <td><button type="button" class="close" ng-click="removeThisTask($index)">&times;</button></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr class="info">
+                            <td colspan="3">
+                                <input type="text" class="form-control" placeholder="Press Enter to Add Task" ng-model="thisThingDay.newTask">
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Thankful for 3</label>
+                            <textarea class="form-control" ng-model="thisThingDay.gratuity" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Journal</label>
+                            <textarea class="form-control" ng-model="thisThingDay.journal" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" style="padding:15px;border-left:1px dotted #999; background-color:#eee;">
+                <div class="row">
+                    <div class="col-md-7">
+                        <h3 style="margin:0;">{{twinLabel}} <span ng-if="tomorrow">Tomorrow!</span></h3>
+                    </div>
+                    <div class="col-md-4 text-right">
+                        <input type="submit" value="Save" class="btn btn-primary">
+                    </div>
+                    <div class="col-md-1" ui-sref="main({primaryDay: twinDay})">
+                        <h3 style="margin:0;" ui-sref="main({pimaryDay:nextDay})"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></h3>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Wake Plan</label>
+                        <div class="form-group">
+                            <input type="text" class="form-control" ng-model="twinThingDay.wakePlan" placeholder="">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Wake Log</label>
+                        <div class="form-group">
+                            <input type="text" class="form-control" ng-model="twinThingDay.wakeLog" placeholder="">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Exercise Plan</label>
+                        <div class="form-group">
+                            <input type="text" class="form-control" ng-model="twinThingDay.exercisePlan" placeholder="">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Exercise Log</label>
+                        <div class="form-group">
+                            <input type="text" class="form-control" ng-model="twinThingDay.exerciseLog" placeholder="">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Eating Plan</label>
+                        <div class="form-group">
+                            <textarea ng-model="twinThingDay.eatingPlan" class="form-control" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Eating Log</label>
+                        <div class="form-group">
+                            <textarea ng-model="twinThingDay.eatingLog" class="form-control" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Reading Plan</label>
+                        <div class="form-group">
+                            <input type="text" ng-model="twinThingDay.readingPlan" class="form-control" placeholder="">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Reading Log</label>
+                        <div class="form-group">
+                            <input type="text" ng-model="twinThingDay.readingLog" class="form-control" placeholder="">
+                        </div>
+                    </div>
+                </div>
+                <h4>Tasks / Pomodoros (click to complete)</h4>
+                <table class="table table-hover">
+                    <tbody>
+                    <tr ng-repeat="task in twinThingDay.tasks track by $index ">
+                        <td width="80%" ng-click="completeTwinTask($index)" ng-class="{ 'strike' : task.completed }">
+                            {{task.name}}
+                        </td>
+                        <td>
+                            <select ng-model="task.minutes" class="form-control" ng-change="addThing()">
+                                <option value="0">0</option>
+                                <option value="15">15 minutes</option>
+                                <option value="30">30 minutes</option>
+                                <option value="45">45 minutes</option>
+                                <option value="60">60 minutes</option>
+                                <option value="90">90 minutes</option>
+                                <option value="120">120 minutes</option>
+                            </select>
+                        </td>
+                        <td><button type="button" class="close" ng-click="removeTwinTask($index)">&times;</button></td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr class="info">
+                        <td colspan="3">
+                            <input type="text" class="form-control" placeholder="Press Enter to Add Task" ng-model="twinThingDay.newTask">
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Thankful for 3</label>
+                            <textarea class="form-control" ng-model="twinThingDay.gratuity" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Journal</label>
+                            <textarea class="form-control" ng-model="twinThingDay.journal" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+<footer class="footer">
+  <div class="container">
+      <p>Angular Fullstack v2.0.13 |
+        <a href="https://twitter.com/tyhenkel">@tyhenkel</a> |
+         <a href="https://github.com/DaftMonk/generator-angular-fullstack/issues?state=open">Issues</a></p>
+  </div>
+</footer>
